@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
-  res.send("Welcome to my api");
+  res.send("Welcome to the Image Repository API");
 });
 
 module.exports = router;
