@@ -6,7 +6,11 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-exports.cloudinaryUploads = (file, folder) => {
+exports.uploadCloudinary = (file, folder) => {
+  console.log(
+    process.env.CLOUDINARY_CLOUD_NAME,
+    process.env.CLOUDINARY_API_KEY
+  );
   return new Promise((resolve) => {
     cloudinary.uploader.upload(
       file,
