@@ -11,6 +11,11 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   images.getUserImages
 );
+router.get(
+  "/:imageId",
+  passport.authenticate("jwt", { session: false }),
+  images.getImageDetails
+);
 router.patch(
   "/:imageId",
   passport.authenticate("jwt", { session: false }),
