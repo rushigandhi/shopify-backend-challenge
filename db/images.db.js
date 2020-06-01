@@ -22,6 +22,15 @@ const createImage = (
   });
 };
 
+const getImages = () => {
+  return models.Image.findAll({
+    where: {
+      isPrivate: false,
+    },
+  });
+};
+
 module.exports = {
   createImage,
+  getImages,
 };

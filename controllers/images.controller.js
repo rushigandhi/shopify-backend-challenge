@@ -1,6 +1,19 @@
 const { uploadCloudinary } = require("../config/cloudinary");
-const { createImage } = require("../db/images.db");
+const { createImage, getImages } = require("../db/images.db");
 const fs = require("fs");
+
+// Get all public images
+exports.getAllImages = async (req, res, next) => {
+  const images = await getImages();
+  if (images) {
+    res.status(200).json({
+      message: "Retrieved all public images successfully",
+      data: images,
+    });
+  } else {
+    res.status(500).json({ error: "Could not retrieve all images" });
+  }
+};
 
 // Allows for bulk/singular image uploads
 exports.postImages = async (req, res, next) => {
