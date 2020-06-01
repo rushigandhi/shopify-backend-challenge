@@ -13,7 +13,7 @@ const cloudinaryUpload = (file, folder) => {
       (result) => {
         resolve({
           url: result.url,
-          id: result.public_id,
+          cloudinaryId: result.public_id,
         });
       },
       {
@@ -24,24 +24,17 @@ const cloudinaryUpload = (file, folder) => {
   });
 };
 
-// const cloudinaryDelete = (id) => {
-//   return new Promise((resolve) => {
-//     cloudinary.uploader.upload(
-//       file,
-//       (result) => {
-//         resolve({
-//           url: result.url,
-//           id: result.public_id,
-//         });
-//       },
-//       {
-//         resource_type: "auto",
-//         folder: folder,
-//       }
-//     );
-//   });
-// };
+const cloudinaryDelete = (id) => {
+  return new Promise((resolve) => {
+    cloudinary.uploader.destroy(id, (result) => {
+      resolve({
+        status: "Success",
+      });
+    });
+  });
+};
 
 module.exports = {
   cloudinaryUpload,
+  cloudinaryDelete,
 };

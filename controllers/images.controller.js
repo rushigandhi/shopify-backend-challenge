@@ -1,4 +1,4 @@
-const { cloudinaryUpload } = require("../config/cloudinary");
+const { cloudinaryUpload, cloudinaryDelete } = require("../config/cloudinary");
 const { isOwner } = require("../utils/checkOwner");
 const {
   createImage,
@@ -6,6 +6,7 @@ const {
   getUserImages,
   updateImage,
   getImage,
+  deleteImage,
 } = require("../db/image.db");
 const fs = require("fs");
 
@@ -40,10 +41,9 @@ exports.getUserImages = async (req, res, next) => {
 exports.getImageDetails = async (req, res, next) => {
   const { imageId } = req.params;
   const userId = req.user.dataValues.id;
-  console.log(imageId, userId);
   const isImageOwner = await isOwner(userId, imageId);
   if (!isImageOwner) {
-    res.status(500).json({ error: "You do not own this image" });
+    res.status(403).json({ error: "You do not own this image" });
   }
   const result = await getImage(imageId);
   if (result) {
@@ -62,7 +62,7 @@ exports.patchImage = async (req, res, next) => {
   const userId = req.user.dataValues.id;
   const isImageOwner = await isOwner(userId, imageId);
   if (!isImageOwner) {
-    res.status(500).json({ error: "You do not own this image" });
+    res.status(403).json({ error: "You do not own this image" });
   }
   const result = await updateImage(imageId, req.body);
   if (result) {
@@ -77,13 +77,13 @@ exports.patchImage = async (req, res, next) => {
 // Allows for bulk/singular image uploads
 exports.postImages = async (req, res, next) => {
   const { images } = JSON.parse(req.body.data);
+  const userId = req.user.dataValues.id;
   const files = req.files;
   const uploadedImagesData = await Promise.all(
     files.map(async (file, index) => {
       const { path } = file;
       if (images && images.length >= 1 && images[index]) {
         const {
-          userId,
           name,
           description,
           isPrivate,
@@ -98,11 +98,13 @@ exports.postImages = async (req, res, next) => {
             name,
             description,
             result.url,
+            result.cloudinaryId,
             isPrivate,
             quantity,
             price,
             discountPercentage
           );
+          return { name, id: newImage.id, url: result.url };
         } catch (err) {
           res.sendStatus(500).json({
             error: "Could not save this image's data to the database",
@@ -110,12 +112,41 @@ exports.postImages = async (req, res, next) => {
           });
         }
         fs.unlinkSync(path);
-        return { name, url: result.url };
       }
     })
   );
   res.status(200).json({
     message: "Images uploaded successfully",
     data: uploadedImagesData,
+  });
+};
+
+// Allows for bulk/singular image deletes
+exports.deleteImages = async (req, res, next) => {
+  const { imageIds } = req.body;
+  const userId = req.user.dataValues.id;
+  imageIds.forEach(async (id) => {
+    const isImageOwner = await isOwner(userId, id);
+    if (!isImageOwner) {
+      res.status(403).json({ error: "You do not own this image" });
+    }
+    try {
+      const image = await getImage(id);
+      const deleteCloudinaryResult = await cloudinaryDelete(image.cloudinaryId);
+      try {
+        const deleteFromDatabase = await deleteImage(id);
+      } catch (err) {
+        res.status(500).json({
+          message: "Could not delete images",
+        });
+      }
+    } catch (err) {
+      res.status(500).json({
+        message: "Could not delete images",
+      });
+    }
+  });
+  res.status(200).json({
+    message: "Deleted all images",
   });
 };

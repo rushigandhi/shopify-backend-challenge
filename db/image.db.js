@@ -5,6 +5,7 @@ const createImage = (
   name,
   description = "",
   url,
+  cloudinaryId,
   isPrivate = true,
   quantity = 0,
   price = 0,
@@ -15,6 +16,7 @@ const createImage = (
     name,
     description,
     url,
+    cloudinaryId,
     isPrivate,
     quantity,
     price,
@@ -54,10 +56,19 @@ const updateImage = (imageId, updateBody) => {
   });
 };
 
+const deleteImage = (imageId) => {
+  return models.Image.destroy({
+    where: {
+      id: imageId,
+    },
+  });
+};
+
 module.exports = {
   createImage,
   getImages,
   getUserImages,
   updateImage,
   getImage,
+  deleteImage,
 };
