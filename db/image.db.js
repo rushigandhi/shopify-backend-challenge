@@ -30,7 +30,16 @@ const getImages = () => {
   });
 };
 
+const getUserImages = (userId) => {
+  return models.Image.findAll({
+    where: {
+      userId,
+    },
+  });
+};
+
 module.exports = {
   createImage,
   getImages,
+  getUserImages,
 };

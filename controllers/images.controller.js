@@ -1,5 +1,5 @@
 const { uploadCloudinary } = require("../config/cloudinary");
-const { createImage, getImages } = require("../db/images.db");
+const { createImage, getImages, getUserImages } = require("../db/image.db");
 const fs = require("fs");
 
 // Get all public images
@@ -8,10 +8,24 @@ exports.getAllImages = async (req, res, next) => {
   if (images) {
     res.status(200).json({
       message: "Retrieved all public images successfully",
-      data: images,
+      images,
     });
   } else {
     res.status(500).json({ error: "Could not retrieve all images" });
+  }
+};
+
+// Get all user images
+exports.getUserImages = async (req, res, next) => {
+  const { userId } = req.params;
+  const images = await getUserImages(userId);
+  if (images) {
+    res.status(200).json({
+      message: "Retrieved all user images successfully",
+      images,
+    });
+  } else {
+    res.status(500).json({ error: "Could not retrieve user images" });
   }
 };
 
@@ -44,7 +58,7 @@ exports.postImages = async (req, res, next) => {
             price,
             discountPercentage
           );
-        } catch (e) {
+        } catch (err) {
           res.sendStatus(500).json({
             error: "Could not save this image's data to the database",
             name,
