@@ -49,7 +49,9 @@ exports.login = async (req, res, next) => {
   // Login authenticate with Local Strategy, will return a jwt
   passport.authenticate("local", { session: false }, (err, user) => {
     if (!user || err) {
-      res.status(400).json({ error: err });
+      res
+        .status(400)
+        .json({ error: "Account does not exist, please register first" });
     }
     const jwtPayload = {
       username: user.email,
@@ -58,7 +60,7 @@ exports.login = async (req, res, next) => {
     };
     req.login(jwtPayload, { session: false }, (err) => {
       if (err) {
-        res.status(400).send({ error: err });
+        res.sendStatus(400).send({ error: err });
       }
       const jwtToken = jwt.sign(jwtPayload, process.env.SECRET_KEY);
       res.status(200).send({ message: "Log in successful", token: jwtToken });

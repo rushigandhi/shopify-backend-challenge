@@ -7,7 +7,7 @@ require("../middleware/passport");
 
 router.get("/", images.getAllImages);
 router.get(
-  "/:userId",
+  "/private",
   passport.authenticate("jwt", { session: false }),
   images.getUserImages
 );

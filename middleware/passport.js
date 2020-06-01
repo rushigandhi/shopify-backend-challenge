@@ -4,7 +4,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const JWTStrategy = passportJWT.Strategy;
 const ExtractJWT = passportJWT.ExtractJwt;
 const bcrypt = require("bcrypt");
-const { getUser } = require("../db/user.db");
+const { getUser, getUserPrivateHash } = require("../db/user.db");
 
 const secretKey = process.env.SECRET_KEY;
 
@@ -16,7 +16,7 @@ passport.use(
     },
     async (email, password, done) => {
       try {
-        const user = await getUser(email);
+        const user = await getUserPrivateHash(email);
         const passwordsMatch = await bcrypt.compare(
           password,
           user.passwordHash

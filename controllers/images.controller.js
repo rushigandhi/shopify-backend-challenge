@@ -17,7 +17,7 @@ exports.getAllImages = async (req, res, next) => {
 
 // Get all user images
 exports.getUserImages = async (req, res, next) => {
-  const { userId } = req.params;
+  const userId = req.user.dataValues.id;
   const images = await getUserImages(userId);
   if (images) {
     res.status(200).json({
