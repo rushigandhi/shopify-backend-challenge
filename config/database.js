@@ -1,9 +1,9 @@
 module.exports = {
   development: {
-    username: "image-repository-db-user",
-    password: "123.456",
-    database: "image-repository-db",
-    host: "127.0.0.1",
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+    database: process.env.DATABASE_NAME,
+    host: process.env.DATABASE_HOST,
     dialect: "postgres",
     port: 5432,
     operatorsAliases: false,
