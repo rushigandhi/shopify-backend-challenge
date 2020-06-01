@@ -5,8 +5,8 @@ var logger = require("morgan");
 var dotenv = require("dotenv");
 dotenv.config();
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users.route");
 var imagesRouter = require("./routes/images.route");
+var usersRouter = require("./routes/users.route");
 
 var app = express();
 
@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 app.use("/images", imagesRouter);
+app.use("/users", usersRouter);
 
 module.exports = app;
