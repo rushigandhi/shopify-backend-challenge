@@ -1,5 +1,11 @@
 const { uploadCloudinary } = require("../config/cloudinary");
-const { createImage, getImages, getUserImages } = require("../db/image.db");
+const { isOwner } = require("../utils/checkOwner");
+const {
+  createImage,
+  getImages,
+  getUserImages,
+  updateImage,
+} = require("../db/image.db");
 const fs = require("fs");
 
 // Get all public images
@@ -26,6 +32,24 @@ exports.getUserImages = async (req, res, next) => {
     });
   } else {
     res.status(500).json({ error: "Could not retrieve user images" });
+  }
+};
+
+// Patch user images
+exports.patchImage = async (req, res, next) => {
+  const { imageId } = req.params;
+  const userId = req.user.dataValues.id;
+  const isImageOwner = await isOwner(userId, imageId);
+  if (!isImageOwner) {
+    res.status(500).json({ error: "You do not own this image" });
+  }
+  const result = await updateImage(imageId, req.body);
+  if (result) {
+    res.status(200).json({
+      message: "Patched image successfully",
+    });
+  } else {
+    res.status(500).json({ error: "Could not patch image" });
   }
 };
 

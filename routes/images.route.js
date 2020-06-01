@@ -11,6 +11,11 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   images.getUserImages
 );
+router.patch(
+  "/:imageId",
+  passport.authenticate("jwt", { session: false }),
+  images.patchImage
+);
 router.post("/", multerUpload.array("image"), images.postImages);
 
 module.exports = router;

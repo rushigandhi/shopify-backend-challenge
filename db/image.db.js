@@ -38,8 +38,26 @@ const getUserImages = (userId) => {
   });
 };
 
+const getImage = (imageId) => {
+  return models.Image.findOne({
+    where: {
+      id: imageId,
+    },
+  });
+};
+
+const updateImage = (imageId, updateBody) => {
+  return models.Image.update(updateBody, {
+    where: {
+      id: imageId,
+    },
+  });
+};
+
 module.exports = {
   createImage,
   getImages,
   getUserImages,
+  updateImage,
+  getImage,
 };
