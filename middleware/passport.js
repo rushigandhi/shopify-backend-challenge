@@ -2,16 +2,17 @@ const passport = require("passport");
 const passportJWT = require("passport-jwt");
 const LocalStrategy = require("passport-local").Strategy;
 const JWTStrategy = passportJWT.Strategy;
+const ExtractJWT = passportJWT.ExtractJwt;
 const bcrypt = require("bcrypt");
 const { getUser } = require("../db/user.db");
 
-const secretKey = procress.env.SECRET;
+const secretKey = process.env.SECRET_KEY;
 
 passport.use(
   new LocalStrategy(
     {
-      usernameField: email,
-      passwordField: password,
+      usernameField: "email",
+      passwordField: "password",
     },
     async (email, password, done) => {
       try {
@@ -36,7 +37,7 @@ passport.use(
 passport.use(
   new JWTStrategy(
     {
-      jwtFromRequest: (req) => req.cookies.jwt,
+      jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
       secretOrKey: secretKey,
     },
     (jwtPayload, done) => {

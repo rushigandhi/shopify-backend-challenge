@@ -7,6 +7,7 @@ dotenv.config();
 var indexRouter = require("./routes/index");
 var imagesRouter = require("./routes/images.route");
 var usersRouter = require("./routes/users.route");
+require("./middleware/passport");
 
 var app = express();
 

@@ -4,6 +4,6 @@ const users = require("../controllers/users.controller");
 
 /* Auth Endpoints. */
 router.post("/register", users.register);
-// router.get("/login", users.login);
+router.post("/login", users.login);
 
 module.exports = router;
