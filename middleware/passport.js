@@ -40,12 +40,16 @@ passport.use(
       jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
       secretOrKey: secretKey,
     },
-    (jwtPayload, done) => {
+    async (jwtPayload, done) => {
       if (Date.now() > jwtPayload.expires) {
         return done("Provided JWT has expired");
       }
-
-      return done(null, jwtPayload);
+      try {
+        const user = await getUser(jwtPayload.username);
+        return done(null, user);
+      } catch (err) {
+        return done(err);
+      }
     }
   )
 );

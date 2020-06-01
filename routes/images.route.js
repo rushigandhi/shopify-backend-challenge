@@ -2,9 +2,15 @@ var express = require("express");
 var router = express.Router();
 const multerUpload = require("../middleware/multer");
 const images = require("../controllers/images.controller");
+var passport = require("passport");
+require("../middleware/passport");
 
 router.get("/", images.getAllImages);
-router.get("/:userId", images.getUserImages);
+router.get(
+  "/:userId",
+  passport.authenticate("jwt", { session: false }),
+  images.getUserImages
+);
 router.post("/", multerUpload.array("image"), images.postImages);
 
 module.exports = router;

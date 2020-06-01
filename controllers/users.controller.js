@@ -53,6 +53,7 @@ exports.login = async (req, res, next) => {
     }
     const jwtPayload = {
       username: user.email,
+      id: user.id,
       expires: Date.now() + parseInt(process.env.JWT_EXPIRY_TIME_MS),
     };
     req.login(jwtPayload, { session: false }, (err) => {
