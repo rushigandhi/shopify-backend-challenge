@@ -8,8 +8,15 @@ const getUser = (email) => {
   });
 };
 
+const createUser = (firstName, lastName, email, passwordHash) => {
+  return models.User.create({
+    firstName,
+    lastName,
+    email,
+    passwordHash,
+  });
+};
 module.exports = {
-  createImage,
-  getImages,
-  getUserImages,
+  getUser,
+  createUser,
 };
