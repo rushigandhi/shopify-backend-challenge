@@ -5,10 +5,12 @@ module.exports = {
       id: {
         primaryKey: true,
         allowNull: false,
-        type: Sequelize.UUIDV4,
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
       },
-      user_id: {
-        type: Sequelize.UUIDV4,
+      userId: {
+        type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         allowNull: false,
       },
       name: {
@@ -23,15 +25,27 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      is_private: {
+      isPrivate: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
-      created_at: {
+      quantity: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      price: {
+        type: Sequelize.DOUBLE,
+        allowNull: false,
+      },
+      discountPercentage: {
+        type: Sequelize.FLOAT,
+        allowNull: false,
+      },
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
       },

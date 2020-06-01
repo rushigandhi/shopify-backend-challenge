@@ -3,12 +3,19 @@ module.exports = (sequelize, DataTypes) => {
   const Image = sequelize.define(
     "Image",
     {
-      id: DataTypes.UUIDV4,
-      user_id: DataTypes.UUIDV4,
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      userId: DataTypes.UUIDV4,
       name: DataTypes.STRING,
       description: DataTypes.STRING,
       url: DataTypes.STRING,
-      is_private: DataTypes.BOOLEAN,
+      isPrivate: DataTypes.BOOLEAN,
+      quantity: DataTypes.INTEGER,
+      price: DataTypes.DOUBLE,
+      discountPercentage: DataTypes.FLOAT,
     },
     {}
   );
