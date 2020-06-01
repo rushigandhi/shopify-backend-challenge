@@ -5,8 +5,8 @@ var logger = require("morgan");
 var dotenv = require("dotenv");
 dotenv.config();
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
-var imagesRouter = require("./routes/images");
+var usersRouter = require("./routes/users.route");
+var imagesRouter = require("./routes/images.route");
 
 var app = express();
 
