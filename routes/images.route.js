@@ -6,6 +6,7 @@ var passport = require("passport");
 require("../middleware/passport");
 
 router.get("/", images.getAllImages);
+router.get("/search", images.searchImages);
 router.get(
   "/private",
   passport.authenticate("jwt", { session: false }),

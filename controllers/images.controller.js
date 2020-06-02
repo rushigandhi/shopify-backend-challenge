@@ -7,6 +7,7 @@ const {
   updateImage,
   getImage,
   deleteImage,
+  searchImages,
 } = require("../db/image.db");
 const fs = require("fs");
 
@@ -35,6 +36,28 @@ exports.getUserImages = async (req, res, next) => {
   } else {
     res.status(500).json({ error: "Could not retrieve user images" });
   }
+};
+
+// Search Images
+exports.searchImages = async (req, res, next) => {
+  const tokens = req.query.tokens.split(",");
+  const results = await Promise.all(
+    tokens.map(async (token) => {
+      try {
+        const searchResults = await searchImages("%" + token + "%");
+        return { ...searchResults };
+      } catch (err) {
+        res.sendStatus(500).json({
+          error: "Could not retrieve search results",
+          name,
+        });
+      }
+    })
+  );
+  res.status(200).json({
+    message: "Retrieved search results successfully",
+    results,
+  });
 };
 
 // Get one image

@@ -1,4 +1,6 @@
 const models = require("../models");
+var Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 const createImage = (
   userId,
@@ -48,6 +50,26 @@ const getImage = (imageId) => {
   });
 };
 
+const searchImages = (token) => {
+  return models.Image.findAll({
+    where: {
+      isPrivate: false,
+      [Op.or]: [
+        {
+          name: {
+            [Op.iLike]: token,
+          },
+        },
+        {
+          description: {
+            [Op.iLike]: token,
+          },
+        },
+      ],
+    },
+  });
+};
+
 const updateImage = (imageId, updateBody) => {
   return models.Image.update(updateBody, {
     where: {
@@ -71,4 +93,5 @@ module.exports = {
   updateImage,
   getImage,
   deleteImage,
+  searchImages,
 };
