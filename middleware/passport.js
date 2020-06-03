@@ -6,7 +6,7 @@ const ExtractJWT = passportJWT.ExtractJwt;
 const bcrypt = require("bcrypt");
 const { getUser, getUserPrivateHash } = require("../db/user.db");
 
-const secretKey = process.env.SECRET_KEY;
+const secretKey = process.env.JWT_SECRET_KEY;
 
 passport.use(
   new LocalStrategy(

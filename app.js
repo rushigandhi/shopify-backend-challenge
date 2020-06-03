@@ -10,6 +10,7 @@ dotenv.config();
 var indexRouter = require("./routes/index");
 var imagesRouter = require("./routes/images.route");
 var usersRouter = require("./routes/users.route");
+var paymentsRouter = require("./routes/payments.route");
 require("./middleware/passport");
 
 // start express
@@ -19,9 +20,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// user routers
+// use routers
 app.use("/", indexRouter);
 app.use("/images", imagesRouter);
 app.use("/users", usersRouter);
+app.use("/payments", paymentsRouter);
 
 module.exports = app;

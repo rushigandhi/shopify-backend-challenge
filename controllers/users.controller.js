@@ -62,7 +62,7 @@ exports.login = async (req, res, next) => {
       if (err) {
         res.sendStatus(400).send({ error: err });
       }
-      const jwtToken = jwt.sign(jwtPayload, process.env.SECRET_KEY);
+      const jwtToken = jwt.sign(jwtPayload, process.env.JWT_SECRET_KEY);
       res.status(200).send({ message: "Log in successful", token: jwtToken });
     });
   })(req, res);
