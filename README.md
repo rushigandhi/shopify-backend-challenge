@@ -78,8 +78,21 @@ The goal is to build an Image Repository API that enables users to:
 - Users can set price and discounts (using Edit)
 - Users can pay other users and buy their images (this feature is experimental)
 
+## Endpoints
+
+- `POST /images/` for uploading images to your user
+- `GET /images/` for getting all public images
+- `GET /images/private` protected route for getting all your images
+- `GET /images/search?tokens=token1,token2` for searching images with tokens
+- `POST /users/register` for registering a user with an email and password
+- `POST /users/login` to log in a user with an email and password, returns a JWT
+- `DELETE /images/` protected route deleting your images
+- `PATCH /images/:imageId` protected route updating an image you own
+- `POST /payments` protected route purchasing images from other users
+
 ## Next Steps and Improvements
 
 - Complete all the unit tests and integration test to ensure 100% code coverage
 - Completely integrate Stripe to create a Stripe `customer` on register and allow for customer to customer payouts
 - Containerize this server with Docker and host to allow for a reliable CI/CD pipeline
+- Create a complete document with that outlines all the features, endpoints, requests/responses from those endpoints
