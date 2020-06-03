@@ -35,11 +35,12 @@ STRIPE_SECRET_KEY=
 ```
 
 4. `npm install` to install all dependencies
-5. `npm start` to start the server
+5. `sequelize-cli db:migrate` to run the database migrations
+6. `npm start` to start the server
 
 ## Testing
 
-I have created a test folder inside the repository with some sample tests that mimics the folder structure of the codebase.
+I have created a test folder inside the repository that mimics the folder structure of the codebase.
 
 ```
 └───tests
@@ -63,4 +64,22 @@ To run the tests, make sure you're in the root directory and run `npm test`. I a
 
 ## Project Outline
 
-The goal is to build an Image Repository API that enables
+The goal is to build an Image Repository API that enables users to:
+
+- Users can upload one or multiple images
+- Private or public image (permissions)
+- Secure uploading and stored images to a reliable service ([Cloudinary](https://cloudinary.com))
+- Users can edit images
+- Users can delete one or multiple images
+- Ensuring a secure deletion of images
+- Access control to make sure that users can only edit/delete their own images
+- Search images from text using their name and description properties
+- Users can manage inventory (using Edit)
+- Users can set price and discounts (using Edit)
+- Users can pay other users and buy their images (this feature is experimental)
+
+## Next Steps and Improvements
+
+- Complete all the unit tests and integration test to ensure 100% code coverage
+- Completely integrate Stripe to create a Stripe `customer` on register and allow for customer to customer payouts
+- Containerize this server with Docker and host to allow for a reliable CI/CD pipeline
