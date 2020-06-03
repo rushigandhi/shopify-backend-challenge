@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "if [[ $NODE_ENV == 'production' ]]; then node ./bin/www; else nodemon ./bin/www; fi",
-    "test": "mocha 'test/**/*.js' --recursive "
+    "test": "mocha 'tests/**/*.js' --recursive "
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
