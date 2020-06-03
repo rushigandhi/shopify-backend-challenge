@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "if [[ $NODE_ENV == 'production' ]]; then node ./bin/www; else nodemon ./bin/www; fi"
+    "start": "if [[ $NODE_ENV == 'production' ]]; then node ./bin/www; else nodemon ./bin/www; fi",
+    "test": "mocha 'test/**/*.js' --recursive "
   },
   "dependencies": {
     "bcrypt": "^4.0.1",
@@ -22,6 +23,9 @@
     "sequelize": "^5.21.11"
   },
   "devDependencies": {
-    "nodemon": "^2.0.4"
+    "chai": "^4.2.0",
+    "mocha": "^7.2.0",
+    "nodemon": "^2.0.4",
+    "request": "^2.88.2"
   }
 }
